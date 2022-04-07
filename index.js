@@ -20,14 +20,22 @@ const readFile = (statusCode, filename, res) => {
 };
 
 const server = http.createServer((req, res) => {
-  if (req.url === "/index.html" || req.url === "/") {
-    readFile(200, "index.html", res);
-  } else if (req.url === "/about.html") {
-    readFile(200, "about.html", res);
-  } else if (req.url === "/contact-me.html") {
-    readFile(200, "contact-me.html", res);
-  } else if (!(req.url === "index.html")) {
-    console.log(req.url);
+  const requestedURL = req.url.split(".");
+
+  if (
+    (requestedURL.length === 2 && requestedURL[1] === "html") ||
+    requestedURL.length === 1
+  ) {
+    if (requestedURL[0].includes("index") || requestedURL[0] === "/") {
+      readFile(200, "index.html", res);
+    } else if (requestedURL[0].includes("about")) {
+      readFile(200, "about.html", res);
+    } else if (requestedURL[0].includes("contact-me")) {
+      readFile(200, "contact-me.html", res);
+    } else {
+      readFile(404, "404.html", res);
+    }
+  } else {
     readFile(404, "404.html", res);
   }
 });
