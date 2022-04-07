@@ -26,11 +26,11 @@ const server = http.createServer((req, res) => {
     (requestedURL.length === 2 && requestedURL[1] === "html") ||
     requestedURL.length === 1
   ) {
-    if (requestedURL[0].includes("index") || requestedURL[0] === "/") {
+    if (requestedURL[0] === "/index" || requestedURL[0] === "/") {
       readFile(200, "index.html", res);
-    } else if (requestedURL[0].includes("about")) {
+    } else if (requestedURL[0] === "/about") {
       readFile(200, "about.html", res);
-    } else if (requestedURL[0].includes("contact-me")) {
+    } else if (requestedURL[0] === "/contact-me") {
       readFile(200, "contact-me.html", res);
     } else {
       readFile(404, "404.html", res);
